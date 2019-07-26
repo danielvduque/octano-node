@@ -1,0 +1,27 @@
+{
+  "name": "daniel",
+  "version": "1.0.0",
+  "description": "rock, scissors, paper",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "debug": "DEBUG=daniel,express* nodemon app.js"
+  },
+  "author": "nashfx",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "body-parser": "1.17.2",
+    "compression": "1.7.1",
+    "core-js": "2.5.1",
+    "cors": "2.8.4",
+    "lodash": "4.17.4",
+    "mongoose": "4.12.3",
+    "mongoose-paginate": "5.0.3",
+    "morgan": "1.9.0",
+    "bcrypt": "3.0.1",
+    "dotenv": "6.0.0",
+    "jsonwebtoken": "8.3.0",
+    "async": "2.6.1"
+  }
+}
