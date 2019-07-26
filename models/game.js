@@ -6,6 +6,8 @@ var schema = new mongoose.Schema({
     playertwo: String,
     winner: String,
     results: Array,
+    wonByOne: { type: Number, default: 0},
+    wonByOne: { type: Number, default: 0},
     createdAt: { type: Date, default: Date.now },
 },{
     usePushEach: true

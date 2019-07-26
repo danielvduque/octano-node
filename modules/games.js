@@ -34,6 +34,13 @@ app.get(routePrefix, (req, res) => {
 });
 
 /**
+ * Get Game configuration of moves
+ */
+app.get(routePrefix + "/moves", (req, res) => {
+    return res.status(400).send(config.CONSTANTS.moves);
+});
+
+/**
  * Create and start a new game
  * */
 app.post(routePrefix, (req, res) => {
@@ -60,7 +67,7 @@ app.post(routePrefix, (req, res) => {
 /**
  * Get all game results
  * */
-app.get(routePrefix + "/results", (req, res) =>{
+app.get(routePrefix + "/results/:game_id", (req, res) =>{
     Game.findById(req.params.game_id, (err, game) => {
         return res.status(200).json(game.results);
     });
@@ -99,19 +106,29 @@ app.post(routePrefix + "/round/:game_id", (req, res) => {
         game.results.push({round: round, winner: roundWinner, playedAt: new Date()});
         
         // calculate round won by each user
-        let valor = [];
+        game.wonByOne = 0;
+        game.wonByTwo = 0;
         game.results.forEach(result => {
-            valor[result.winner] = valor[result.winner] ? valor[result.winner] + 1 : 1;
+            if(result.winner == game.playerone){
+                game.wonByOne++;
+            }else{
+                game.wonByTwo++;
+            }
         });
-        console.log(valor);
-        
-        // Save the game
+
+        // Save the game and verify if winner
         game.save((err, game) => {
             if (err) {
                 res.send(err);
             }
 
-            res.status(200).json(game);
+            if(game.wonByOne === 3){
+                res.status(200).json({winner:"Jugador uno", name: game.playerone});
+            }else if(game.wonByTwo === 3){
+                res.status(200).json({winner:"Jugador dos", name: game.playertwo});
+            }else{
+                res.status(200).json({winner:"no", name: null});
+            }
         });
     });
 });
