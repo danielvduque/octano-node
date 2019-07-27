@@ -7,7 +7,7 @@ var schema = new mongoose.Schema({
     winner: String,
     results: Array,
     wonByOne: { type: Number, default: 0},
-    wonByOne: { type: Number, default: 0},
+    wonByTwo: { type: Number, default: 0},
     createdAt: { type: Date, default: Date.now },
 },{
     usePushEach: true

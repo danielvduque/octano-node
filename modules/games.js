@@ -69,8 +69,12 @@ app.post(routePrefix, (req, res) => {
  * */
 app.get(routePrefix + "/results/:game_id", (req, res) =>{
     Game.findById(req.params.game_id, (err, game) => {
-        return res.status(200).json(game.results);
-    });
+        if(game.results.length > 0){
+            return res.status(200).json(game.results);
+        }
+        
+        return res.status(200).json({message: "No rounds played yet."});
+    });        
 });
 
 /**
@@ -78,7 +82,6 @@ app.get(routePrefix + "/results/:game_id", (req, res) =>{
  * */
 app.post(routePrefix + "/round/:game_id", (req, res) => {
     Game.findById(req.params.game_id, (err, game) => {
-        console.log(game);
         if (err) {
             res.send(err);
         }
@@ -90,31 +93,20 @@ app.post(routePrefix + "/round/:game_id", (req, res) => {
             if(req.body.moveone == move.type){
                 if(req.body.movetwo == move.kills){
                     roundWinner = game.playerone;
-                    console.log("jugador uno: "+req.body.moveone + " mato a " + req.body.movetwo);
+                    game.wonByOne++;
                 }
             }
 
             if(req.body.movetwo == move.type){
                 if(req.body.moveone == move.kills){
                     roundWinner = game.playertwo;
-                    console.log("jugador dos: "+req.body.movetwo + " mato a " + req.body.moveone);
+                    game.wonByTwo++;
                 }
             }
         });
 
         let round = game.results.length + 1;
         game.results.push({round: round, winner: roundWinner, playedAt: new Date()});
-        
-        // calculate round won by each user
-        game.wonByOne = 0;
-        game.wonByTwo = 0;
-        game.results.forEach(result => {
-            if(result.winner == game.playerone){
-                game.wonByOne++;
-            }else{
-                game.wonByTwo++;
-            }
-        });
 
         // Save the game and verify if winner
         game.save((err, game) => {
