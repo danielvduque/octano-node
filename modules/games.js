@@ -37,7 +37,7 @@ app.get(routePrefix, (req, res) => {
  * Get Game configuration of moves
  */
 app.get(routePrefix + "/moves", (req, res) => {
-    return res.status(400).send(config.CONSTANTS.moves);
+    return res.status(200).send(config.CONSTANTS.moves);
 });
 
 /**
@@ -62,6 +62,15 @@ app.post(routePrefix, (req, res) => {
         res.status(201).json(game);
     });
 
+});
+
+/**
+ * Get game data
+ * */
+app.get(routePrefix + "/:game_id", (req, res) => {
+    Game.findById(req.params.game_id, (err, game) => {
+        return res.status(200).json(game);
+    });   
 });
 
 /**
@@ -107,6 +116,17 @@ app.post(routePrefix + "/round/:game_id", (req, res) => {
 
         let round = game.results.length + 1;
         game.results.push({round: round, winner: roundWinner, playedAt: new Date()});
+        
+        let response;
+        if(game.wonByOne === 3){
+            game.winner = game.playerone;
+            response = {winner:"Jugador uno", name: game.playerone};
+        }else if(game.wonByTwo === 3){
+            game.winner = game.playertwo;
+            response = {winner:"Jugador dos", name: game.playertwo};
+        }else{
+           response = {winner:"no", name: null};
+        }
 
         // Save the game and verify if winner
         game.save((err, game) => {
@@ -114,13 +134,7 @@ app.post(routePrefix + "/round/:game_id", (req, res) => {
                 res.send(err);
             }
 
-            if(game.wonByOne === 3){
-                res.status(200).json({winner:"Jugador uno", name: game.playerone});
-            }else if(game.wonByTwo === 3){
-                res.status(200).json({winner:"Jugador dos", name: game.playertwo});
-            }else{
-                res.status(200).json({winner:"no", name: null});
-            }
+            res.status(200).json(response);
         });
     });
 });
