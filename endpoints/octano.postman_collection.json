@@ -1,0 +1,155 @@
+{
+	"info": {
+		"name": "api",
+		"_postman_id": "a38c046a-6580-4df3-9a34-25b83ddd15e7",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "start game",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"playerone\": \"Daniel\",\n    \"playertwo\": \"Duque\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3002/game",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"game"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "Add and evaluate round",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"moveone\": \"rock\",\n    \"movetwo\": \"paper\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3002/game/round/5d3b4f1c8e418f15e150abd8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"game",
+						"round",
+						"5d3b4f1c8e418f15e150abd8"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "get game configuration moves",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3002/game/moves",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"game",
+						"moves"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "get results per round",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3002/game/results/5d3b4f1c8e418f15e150abd8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"game",
+						"results",
+						"5d3b4f1c8e418f15e150abd8"
+					]
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "Get game data",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"moveone\": \"rock\",\n    \"movetwo\": \"scissor\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3002/game/5d3df8230e5c1a05203da85b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3002",
+					"path": [
+						"game",
+						"5d3df8230e5c1a05203da85b"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
